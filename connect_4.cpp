@@ -1,5 +1,5 @@
 #include <iostream>
-#include <array>
+#include <vector>
 
 using namespace std;
 
@@ -124,6 +124,11 @@ int Game :: didWin()
                             break;
                         }
                     }
+                    else
+                    {
+                        flag = false;
+                    }
+                    
                     
                 }
 
@@ -145,6 +150,10 @@ int Game :: didWin()
                             flag = false;
                             break;
                         }
+                    }
+                    else
+                    {
+                        flag = false;
                     }
                     
                 }
@@ -168,6 +177,10 @@ int Game :: didWin()
                             break;
                         }
                     }
+                    else
+                    {
+                        flag = false;
+                    }
                     
                 }
                 
@@ -189,6 +202,10 @@ int Game :: didWin()
                             flag = false;
                             break;
                         }
+                    }
+                    else
+                    {
+                        flag = false;
                     }
                     
                 }
@@ -212,6 +229,10 @@ int Game :: didWin()
                             break;
                         }
                     }
+                    else
+                    {
+                        flag = false;
+                    }
                     
                 }
 
@@ -233,6 +254,10 @@ int Game :: didWin()
                             flag = false;
                             break;
                         }
+                    }
+                    else
+                    {
+                        flag = false;
                     }
                     
                 }
@@ -256,6 +281,10 @@ int Game :: didWin()
                             break;
                         }
                     }
+                    else
+                    {
+                        flag = false;
+                    }
                     
                 }
 
@@ -267,7 +296,7 @@ int Game :: didWin()
 
                 flag = true;
 
-                // loop for 9:30
+                // loop for 10:30
                 for (int k = 1; k < 4; k++)
                 {
                     if(j + 3 >= 0 && i + 3 >= 0)
@@ -277,6 +306,10 @@ int Game :: didWin()
                             flag = false;
                             break;
                         }
+                    }
+                    else
+                    {
+                        flag = false;
                     }
                     
                 }
@@ -288,8 +321,8 @@ int Game :: didWin()
                 }
             }
 
-            // if(flag)
-            //     break;
+            if(won != 0)
+                return won;
             
         }
         
@@ -313,14 +346,43 @@ int main()
 
     Game game(player);
     
-    game.makeMove(1, true);
-    game.makeMove(2, true);
-    game.makeMove(3, true);
-    game.makeMove(4, true);
+    // game.makeMove(5, true);
+    // game.makeMove(4, false);
+    // game.makeMove(4, true);
+    // game.makeMove(3, false);
+    // game.makeMove(3, false);
+    // game.makeMove(3, true);
+    // game.makeMove(2, false);
+    // game.makeMove(2, false);
+    // game.makeMove(2, false);
+    // game.makeMove(2, true);
+
+    // game.makeMove(2, true);
+    // game.makeMove(3, true);
+    // game.makeMove(4, true);
+    // game.makeMove(5, true);
+    
+    // game.makeMove(2, true);
+    // game.makeMove(2, true);
+    // game.makeMove(2, true);
+    // game.makeMove(2, true);
+
+    // game.makeMove(2, true);
+    // game.makeMove(3, false);
+    // game.makeMove(3, true);
+    // game.makeMove(4, false);
+    // game.makeMove(4, false);
+    // game.makeMove(4, true);
+    // game.makeMove(5, false);
+    // game.makeMove(5, false);
+    // game.makeMove(5, false);
+    // game.makeMove(5, true);
 
     int play = game.didWin();
     cout << play << " won." << endl;
     //system("clear");
     game.printBoard();
+    
     return 0;
 }
+
