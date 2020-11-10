@@ -164,7 +164,7 @@ int Game :: didWin()
                 // loop for 6:00
                 for (int k = 1; k < 4; k++)
                 {
-                    if(i + 3 <= 9)
+                    if(i + 3 <= ROW - 1 )
                     {
                         if(board[i+k][j] != val)
                         {
@@ -190,7 +190,7 @@ int Game :: didWin()
                 // loop for 3:00 
                 for (int k = 1; k < 4; k++)
                 {
-                    if(j + 3 <= 9)
+                    if(j + 3 <= ROW - 1 )
                     {
                         if(board[i][j+k] != val)
                         {
@@ -242,7 +242,7 @@ int Game :: didWin()
                 // loop for 1:30
                 for (int k = 1; k < 4; k++)
                 {
-                    if(j + 3 <= 9 && i - 3 >= 0)
+                    if(j + 3 <= ROW - 1  && i - 3 >= 0)
                     {
                         if(board[i-k][j+k] != val)
                         {
@@ -268,7 +268,7 @@ int Game :: didWin()
                 // loop for 5:30
                 for (int k = 1; k < 4; k++)
                 {
-                    if(j + 3 <= 9 && i + 3 >= 9)
+                    if(j + 3 <= ROW - 1  && i + 3 >= ROW - 1 )
                     {
                         if(board[i+k][j+k] != val)
                         {
@@ -294,7 +294,7 @@ int Game :: didWin()
                 // loop for 7:30
                 for (int k = 1; k < 4; k++)
                 {
-                    if(j + 3 >= 0 && i + 3 <= 9)
+                    if(j + 3 >= 0 && i + 3 <= ROW - 1 )
                     {
                         if(board[i+k][j-k] != val)
                         {
