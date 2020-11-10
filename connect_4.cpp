@@ -2,12 +2,14 @@
 #include <vector>
 #include<algorithm> 
 
+#define ROW 4
+
 using namespace std;
 
 // Game class
 class Game
 {
-    int board[10][10];
+    int board[ROW][ROW];
     char player;
     char cpu;
 public:
@@ -26,8 +28,8 @@ public:
 // Contructor sets char of player
 Game :: Game(char player_1)
 {
-    for(auto &row : board)
-        for(auto &val : row)
+    for(auto &rows : board)
+        for(auto &val : rows)
             val = 0;
     this->player = player_1;
     this->cpu = 'c';
@@ -53,23 +55,23 @@ string Game :: getColor(char color)
 void Game :: printBoard()
 {
     cout << "| ";
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < ROW; i++)
         cout << i << " | ";
 
     cout << endl << " ";
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < ROW; i++)
         cout << " |  ";
     cout << endl;
 
     cout << " ";
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < ROW; i++)
         cout << " v  ";
     cout << endl;
 
-    for(auto &row : board)
+    for(auto &rows : board)
     {
         cout << "| ";
-        for(auto &val : row)
+        for(auto &val : rows)
         {
             if(val == 1)
                 cout << getColor('y') << player << getColor('n') << " | ";
@@ -87,7 +89,7 @@ void Game :: printBoard()
 // Registers the move made by the players
 void Game :: makeMove(int col, bool player)
 {
-    for (int i = 9; i > 0; i--)
+    for (int i = ROW-1; i >= 0; i--)
     {
         if(board[i][col] == 0)
         {
@@ -104,7 +106,7 @@ void Game :: makeMove(int col, bool player)
 // Removes the move made by the players
 void Game :: removeMove(int col)
 {
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < ROW; i++)
     {
         if(board[i][col] != 0)
         {
@@ -121,9 +123,9 @@ int Game :: didWin()
     bool flag = true;
     int won = 0;
 
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < ROW; i++)
     {
-        for (int j = 0; j < 10; j++)
+        for (int j = 0; j < ROW; j++)
         {
 
             if (board[i][j] != 0)
@@ -353,8 +355,8 @@ int Game :: didWin()
 // Returns if the present board is a tied 
 bool Game :: isTie()
 {
-    for(auto &row : board)
-        for(auto &val : row)
+    for(auto &rows : board)
+        for(auto &val : rows)
             if(val == 0)
                 return false;
     return true;
@@ -364,13 +366,13 @@ int Game  :: minimax(int depth, bool player)
 {
     int won = didWin();
     
-    if(won != 0 || isTie())
+    if(isTie() || won != 0 )
         return won;
     // Maximizing player
     if(player)
     {
         int presentScore, bestScore = -9999999;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < ROW; i++)
         {
             // Checking if the position is free
             if(board[0][i] == 0)
@@ -388,7 +390,7 @@ int Game  :: minimax(int depth, bool player)
     else
     {
         int presentScore, bestScore = 9999999;
-        for (int i = 0; i < 10; i++)
+        for (int i = 0; i < ROW; i++)
         {
             // Checking if the position is free
             if(board[0][i] == 0)
@@ -409,7 +411,7 @@ int Game :: getCompMove()
     int bestScore = -99999999;
     int bestMove = 0;
     int presentScore;
-    for (int i = 0; i < 10; i++)
+    for (int i = 0; i < ROW; i++)
     {
         // Checking if the position is free
         if(board[0][i] == 0)
