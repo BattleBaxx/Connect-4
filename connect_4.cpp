@@ -9,10 +9,11 @@ using namespace std;
 // Game class
 class Game
 {
+public:
     int board[ROW][ROW];
     char player;
     char cpu;
-public:
+//public:
     Game(char);
     void printBoard();
     string getColor(char);
@@ -359,13 +360,19 @@ bool Game :: isTie()
         for(auto &val : rows)
             if(val == 0)
                 return false;
-    return true;
+
+    // the board is filled, nobody won => tie
+    if(didWin() == 0)
+        return true;
+    else //the board is filled, somebody won
+        return false;
 }
 
 int Game  :: minimax(int depth, bool player)
 {
     int won = didWin();
     
+    cout << "Calling minimax at depth: " << depth << endl;
     if(isTie() || won != 0 )
         return won;
     // Maximizing player
@@ -383,6 +390,8 @@ int Game  :: minimax(int depth, bool player)
                 bestScore = max(presentScore, bestScore);
             }
         }
+
+        cout << "Returning bestscore: " << bestScore << endl;
         return bestScore;
     }
 
@@ -401,6 +410,7 @@ int Game  :: minimax(int depth, bool player)
                 bestScore = min(presentScore, bestScore);
             }
         }
+        cout << "Returning bestscore: " << bestScore << endl;
         return bestScore;
     }
     
@@ -418,6 +428,7 @@ int Game :: getCompMove()
         {
             makeMove(i, false);
             presentScore = minimax(0, false);
+            cout << "RETURNED OUT OF MINIMAX" << endl;
             removeMove(i);
             if(presentScore > bestScore)
             {
@@ -519,7 +530,34 @@ int main()
     // cout << play << " won." << endl;
     // game.printBoard();
     
-    game.start();
+    //game.start();
+
+    for(int i = 0; i<2; i++)
+    {
+        for(int j = 0; j<ROW; j++)
+        {
+            if(j == ROW-1)
+                game.board[i][j] = -1;
+            else
+                game.board[i][j] = 1;
+        }
+
+    }
+
+    for(int i = 2; i<ROW; i++)
+    {
+        for(int j = 0; j<ROW; j++)
+        {
+            if(j == ROW-1)
+                game.board[i][j] = 1;
+            else
+                game.board[i][j] = -1;
+        }
+
+    }
+
+    game.printBoard();
+    cout << game.didWin() << " " <<  game.isTie() << endl;
 
     return 0;
 }
