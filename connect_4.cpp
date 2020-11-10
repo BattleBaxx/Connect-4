@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include<algorithm> 
 
 using namespace std;
 
@@ -14,9 +15,12 @@ public:
     void printBoard();
     string getColor(char);
     void makeMove(int, bool);
+    void removeMove(int);
     void start();
     int didWin();
     bool isTie();
+    int getCompMove();
+    int minimax(int, bool);
 };
 
 // Contructor sets char of player
@@ -97,6 +101,19 @@ void Game :: makeMove(int col, bool player)
 
 }
 
+// Removes the move made by the players
+void Game :: removeMove(int col)
+{
+    for (int i = 0; i < 10; i++)
+    {
+        if(board[i][col] != 0)
+        {
+           board[i][col] = 0;
+           break;
+        } 
+    }
+
+}
 
 // Check of anyone won and if won returns the winning player char
 int Game :: didWin()
@@ -343,18 +360,92 @@ bool Game :: isTie()
     return true;
 }
 
+int Game  :: minimax(int depth, bool player)
+{
+    int won = didWin();
+    
+    if(won != 0 || isTie())
+        return won;
+    // Maximizing player
+    if(player)
+    {
+        int presentScore, bestScore = -9999999;
+        for (int i = 0; i < 10; i++)
+        {
+            // Checking if the position is free
+            if(board[0][i] == 0)
+            {
+                makeMove(i, false);
+                presentScore = minimax(depth+1, false);
+                removeMove(i);
+                bestScore = max(presentScore, bestScore);
+            }
+        }
+        return bestScore;
+    }
+
+    // Minimizing player
+    else
+    {
+        int presentScore, bestScore = 9999999;
+        for (int i = 0; i < 10; i++)
+        {
+            // Checking if the position is free
+            if(board[0][i] == 0)
+            {
+                makeMove(i, true);
+                presentScore = minimax(depth+1, true);
+                removeMove(i);
+                bestScore = min(presentScore, bestScore);
+            }
+        }
+        return bestScore;
+    }
+    
+}
+
+int Game :: getCompMove()
+{
+    int bestScore = -99999999;
+    int bestMove = 0;
+    int presentScore;
+    for (int i = 0; i < 10; i++)
+    {
+        // Checking if the position is free
+        if(board[0][i] == 0)
+        {
+            makeMove(i, false);
+            presentScore = minimax(0, false);
+            removeMove(i);
+            if(presentScore > bestScore)
+            {
+                bestMove = i;
+                bestScore = presentScore;
+            }
+        }
+        
+    }
+    return bestMove;
+
+    return 1;
+}
+
+
+
 // Skeleton of the Game
 void Game :: start()
 {
-    int playerMove, won = 0;
+    int playerMove, compMove, won = 0;
     
     while (won == 0 && !isTie())
     {
-        cout << "Please  enter the move you are about to play: ";
+        cout << "Please enter the move you are about to play: ";
         cin >> playerMove;
         makeMove(playerMove, true);
-        system("clear");
         printBoard();
+        compMove = getCompMove();
+        makeMove(compMove,false);
+        system("clear");
         won = didWin();
     }
     
@@ -409,11 +500,25 @@ int main()
     // game.makeMove(5, false);
     // game.makeMove(5, true);
 
+
+    // game.makeMove(0, false);
+    // game.makeMove(0, true);
+    // game.makeMove(0, false);
+    // game.makeMove(0, true);
+    // game.makeMove(0, false);
+    // game.makeMove(0, true);
+    // game.makeMove(0, false);
+    // game.makeMove(0, true);
+    // game.makeMove(0, false);
+    // game.makeMove(0, true);
+
+
     // int play = game.didWin();
     // cout << play << " won." << endl;
     // game.printBoard();
     
     game.start();
+
     return 0;
 }
 
