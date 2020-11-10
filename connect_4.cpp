@@ -374,17 +374,20 @@ int Game  :: minimax(int depth, bool player)
     
     cout << "Calling minimax at depth: " << depth << endl;
     if(isTie() || won != 0 )
-        return won;
+    {
+        cout << "BASE CONDITION" << endl;
+        return -won;
+    }
     // Maximizing player
     if(player)
     {
-        int presentScore, bestScore = -9999999;
+        int presentScore = 0, bestScore = -9999999;
         for (int i = 0; i < ROW; i++)
         {
             // Checking if the position is free
             if(board[0][i] == 0)
             {
-                makeMove(i, false);
+                makeMove(i, true);
                 presentScore = minimax(depth+1, false);
                 removeMove(i);
                 bestScore = max(presentScore, bestScore);
@@ -398,13 +401,13 @@ int Game  :: minimax(int depth, bool player)
     // Minimizing player
     else
     {
-        int presentScore, bestScore = 9999999;
+        int presentScore = 0, bestScore = 9999999;
         for (int i = 0; i < ROW; i++)
         {
             // Checking if the position is free
             if(board[0][i] == 0)
             {
-                makeMove(i, true);
+                makeMove(i, false);
                 presentScore = minimax(depth+1, true);
                 removeMove(i);
                 bestScore = min(presentScore, bestScore);
@@ -430,7 +433,12 @@ int Game :: getCompMove()
             presentScore = minimax(0, false);
             cout << "RETURNED OUT OF MINIMAX" << endl;
             removeMove(i);
-            if(presentScore > bestScore)
+            if(presentScore == 1)
+            {
+                cout << "PRESENT SCORE 1" << endl;
+                cout << "Best score: " << bestScore << endl;
+            }
+            if(presentScore >= bestScore)
             {
                 bestMove = i;
                 bestScore = presentScore;
@@ -438,6 +446,7 @@ int Game :: getCompMove()
         }
         
     }
+    cout << "Returning bestMove value : " << bestMove << endl;
     return bestMove;
 
     return 1;
@@ -450,7 +459,7 @@ void Game :: start()
 {
     int playerMove, compMove, won = 0;
     
-    while (won == 0 && !isTie())
+    while (won == 0 & !isTie())
     {
         cout << "Please enter the move you are about to play: ";
         cin >> playerMove;
@@ -458,7 +467,8 @@ void Game :: start()
         printBoard();
         compMove = getCompMove();
         makeMove(compMove,false);
-        system("clear");
+        printBoard();
+        //system("clear");
         won = didWin();
     }
     
@@ -532,32 +542,36 @@ int main()
     
     //game.start();
 
-    for(int i = 0; i<2; i++)
-    {
-        for(int j = 0; j<ROW; j++)
-        {
-            if(j == ROW-1)
-                game.board[i][j] = -1;
-            else
-                game.board[i][j] = 1;
-        }
+    // for(int i = ROW-1; i>=2; i--)
+    // {
+    //     for(int j = 0; j<ROW; j++)
+    //     {
+    //         if(j == ROW-1)
+    //             game.board[i][j] = -1;
+    //         else
+    //             game.board[i][j] = 1;
+    //     }
 
-    }
+    // }
 
-    for(int i = 2; i<ROW; i++)
-    {
-        for(int j = 0; j<ROW; j++)
-        {
-            if(j == ROW-1)
-                game.board[i][j] = 1;
-            else
-                game.board[i][j] = -1;
-        }
+    //game.board[1][3] = -1;
 
-    }
+    // for(int i = 2; i<ROW; i++)
+    // {
+    //     for(int j = 0; j<ROW; j++)
+    //     {
+    //         if(j == ROW-1)
+    //             game.board[i][j] = 1;
+    //         else
+    //             game.board[i][j] = -1;
+    //     }
 
-    game.printBoard();
-    cout << game.didWin() << " " <<  game.isTie() << endl;
+    // }
+
+    game.start();
+
+    //game.printBoard();
+    //cout << game.didWin() << " " <<  game.isTie() << endl;
 
     return 0;
 }
