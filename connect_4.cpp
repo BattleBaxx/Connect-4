@@ -16,6 +16,7 @@ public:
     void makeMove(int, bool);
     void start();
     int didWin();
+    bool isTie();
 };
 
 // Contructor sets char of player
@@ -332,16 +333,46 @@ int Game :: didWin()
     
 }
 
+// Returns if the present board is a tied 
+bool Game :: isTie()
+{
+    for(auto &row : board)
+        for(auto &val : row)
+            if(val == 0)
+                return false;
+    return true;
+}
+
+// Skeleton of the Game
 void Game :: start()
 {
-    printBoard();
-
+    int playerMove, won = 0;
+    
+    while (won == 0 && !isTie())
+    {
+        cout << "Please  enter the move you are about to play: ";
+        cin >> playerMove;
+        makeMove(playerMove, true);
+        system("clear");
+        printBoard();
+        won = didWin();
+    }
+    
+    if(won == 1)
+        cout << "The human won." << endl;
+    else if (won == -1)
+        cout << "What did you think you would win with a computer.." << endl;
+    else
+        cout << "Well the game is a tie." << endl;
+     
+    
+    
 }
 
 int main()
 {
     char player;
-    cout << "Choose your character PLAYER 1: ";
+    cout << "Choose your character PLAYER: ";
     cin >> player;
 
     Game game(player);
@@ -371,18 +402,18 @@ int main()
     // game.makeMove(3, false);
     // game.makeMove(3, true);
     // game.makeMove(4, false);
-    // game.makeMove(4, false);
+    // game.makeMove(4, false);     
     // game.makeMove(4, true);
     // game.makeMove(5, false);
     // game.makeMove(5, false);
     // game.makeMove(5, false);
     // game.makeMove(5, true);
 
-    int play = game.didWin();
-    cout << play << " won." << endl;
-    //system("clear");
-    game.printBoard();
+    // int play = game.didWin();
+    // cout << play << " won." << endl;
+    // game.printBoard();
     
+    game.start();
     return 0;
 }
 
