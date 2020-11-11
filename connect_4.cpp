@@ -377,9 +377,9 @@ int Game  :: minimax(int depth, bool player)
     {
         cout << "BASE CONDITION" << endl;
         if(player)
-            return won;
-        else
             return -won;
+        else
+            return won;
     }
     // Maximizing player
     if(player)
