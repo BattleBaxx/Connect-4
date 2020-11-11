@@ -376,7 +376,10 @@ int Game  :: minimax(int depth, bool player)
     if(isTie() || won != 0 )
     {
         cout << "BASE CONDITION" << endl;
-        return -won;
+        if(player)
+            return won;
+        else
+            return -won;
     }
     // Maximizing player
     if(player)
@@ -556,17 +559,17 @@ int main()
 
     //game.board[1][3] = -1;
 
-    // for(int i = 2; i<ROW; i++)
-    // {
-    //     for(int j = 0; j<ROW; j++)
-    //     {
-    //         if(j == ROW-1)
-    //             game.board[i][j] = 1;
-    //         else
-    //             game.board[i][j] = -1;
-    //     }
+    for(int i = 2; i<ROW; i++)
+    {
+        for(int j = 0; j<ROW; j++)
+        {
+            if(j == ROW-1)
+                game.board[i][j] = 1;
+            else
+                game.board[i][j] = -1;
+        }
 
-    // }
+    }
 
     game.start();
 
@@ -575,4 +578,3 @@ int main()
 
     return 0;
 }
-
