@@ -559,7 +559,7 @@ int main()
 
     //game.board[1][3] = -1;
 
-    for(int i = 2; i<ROW; i++)
+    for(int i = 2; i<ROW-1; i++)
     {
         for(int j = 0; j<ROW; j++)
         {
