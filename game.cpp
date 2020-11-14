@@ -1,41 +1,14 @@
-#include <iostream>
-#include <vector>
-#include<algorithm> 
 
-#define ROW 4
+#include "Game.h"
 
 using namespace std;
 
-// Game class
-class Game
-{
-public:
-    int board[ROW][ROW];
-    char player;
-    char cpu;
-//public:
-    Game(char);
-    void printBoard();
-    string getColor(char);
-    void makeMove(int, bool);
-    void removeMove(int);
-    void start();
-    int didWin();
-    bool isTie();
-    int getCompMove();
-    int minimax(int, bool);
-};
-
 // Contructor sets char of player
-Game :: Game(char player_1)
+Game :: Game(char player_1) : board({{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}})
 {
-    for(auto &rows : board)
-        for(auto &val : rows)
-            val = 0;
     this->player = player_1;
     this->cpu = 'c';
 }
-
 
 // Function for returns color
 string Game :: getColor(char color)
@@ -81,7 +54,7 @@ void Game :: printBoard()
             else
                 cout << getColor('c') << "." << getColor('n') << " | ";
         }
-        cout << endl << "-----------------------------------------" << endl;
+        cout << endl << "----------------" << endl;
     }
 
 
@@ -372,15 +345,15 @@ int Game  :: minimax(int depth, bool player)
 {
     int won = didWin();
     
-    cout << "Calling minimax at depth: " << depth << endl;
-    if(isTie() || won != 0 )
+    //cout << "Calling minimax at depth: " << depth << endl;
+    if(isTie())
     {
-        cout << "BASE CONDITION" << endl;
-        if(player)
-            return -won;
-        else
-            return won;
+        // << "BASE CONDITION" << endl;
+        return 0;
     }
+    if(won != 0)
+        return won;
+    
     // Maximizing player
     if(player)
     {
@@ -397,7 +370,7 @@ int Game  :: minimax(int depth, bool player)
             }
         }
 
-        cout << "Returning bestscore: " << bestScore << endl;
+        //cout << "Returning bestscore: " << bestScore << endl;
         return bestScore;
     }
 
@@ -416,7 +389,7 @@ int Game  :: minimax(int depth, bool player)
                 bestScore = min(presentScore, bestScore);
             }
         }
-        cout << "Returning bestscore: " << bestScore << endl;
+        //cout << "Returning bestscore: " << bestScore << endl;
         return bestScore;
     }
     
@@ -424,7 +397,7 @@ int Game  :: minimax(int depth, bool player)
 
 int Game :: getCompMove()
 {
-    int bestScore = -99999999;
+    int bestScore = 99999;
     int bestMove = 0;
     int presentScore;
     for (int i = 0; i < ROW; i++)
@@ -433,26 +406,25 @@ int Game :: getCompMove()
         if(board[0][i] == 0)
         {
             makeMove(i, false);
-            presentScore = minimax(0, false);
-            cout << "RETURNED OUT OF MINIMAX" << endl;
+            presentScore = minimax(0, true);
+            //cout << "RETURNED OUT OF MINIMAX" << endl;
             removeMove(i);
-            if(presentScore == 1)
-            {
-                cout << "PRESENT SCORE 1" << endl;
-                cout << "Best score: " << bestScore << endl;
-            }
-            if(presentScore >= bestScore)
+            // if(presentScore == 1)
+            // {
+            //     cout << "PRESENT SCORE 1" << endl;
+            //     cout << "Best score: " << bestScore << endl;
+            // }
+            if(presentScore <= bestScore)
             {
                 bestMove = i;
                 bestScore = presentScore;
             }
+            cout << "PresentScore for i: " << i << " is " << presentScore << endl;
         }
         
     }
-    cout << "Returning bestMove value : " << bestMove << endl;
+    //cout << "Returning bestMove value : " << bestMove << endl;
     return bestMove;
-
-    return 1;
 }
 
 
@@ -481,100 +453,5 @@ void Game :: start()
         cout << "What did you think you would win with a computer.." << endl;
     else
         cout << "Well the game is a tie." << endl;
-     
-    
-    
-}
 
-int main()
-{
-    char player;
-    cout << "Choose your character PLAYER: ";
-    cin >> player;
-
-    Game game(player);
-    
-    // game.makeMove(5, true);
-    // game.makeMove(4, false);
-    // game.makeMove(4, true);
-    // game.makeMove(3, false);
-    // game.makeMove(3, false);
-    // game.makeMove(3, true);
-    // game.makeMove(2, false);
-    // game.makeMove(2, false);
-    // game.makeMove(2, false);
-    // game.makeMove(2, true);
-
-    // game.makeMove(2, true);
-    // game.makeMove(3, true);
-    // game.makeMove(4, true);
-    // game.makeMove(5, true);
-    
-    // game.makeMove(2, true);
-    // game.makeMove(2, true);
-    // game.makeMove(2, true);
-    // game.makeMove(2, true);
-
-    // game.makeMove(2, true);
-    // game.makeMove(3, false);
-    // game.makeMove(3, true);
-    // game.makeMove(4, false);
-    // game.makeMove(4, false);     
-    // game.makeMove(4, true);
-    // game.makeMove(5, false);
-    // game.makeMove(5, false);
-    // game.makeMove(5, false);
-    // game.makeMove(5, true);
-
-
-    // game.makeMove(0, false);
-    // game.makeMove(0, true);
-    // game.makeMove(0, false);
-    // game.makeMove(0, true);
-    // game.makeMove(0, false);
-    // game.makeMove(0, true);
-    // game.makeMove(0, false);
-    // game.makeMove(0, true);
-    // game.makeMove(0, false);
-    // game.makeMove(0, true);
-
-
-    // int play = game.didWin();
-    // cout << play << " won." << endl;
-    // game.printBoard();
-    
-    //game.start();
-
-    // for(int i = ROW-1; i>=2; i--)
-    // {
-    //     for(int j = 0; j<ROW; j++)
-    //     {
-    //         if(j == ROW-1)
-    //             game.board[i][j] = -1;
-    //         else
-    //             game.board[i][j] = 1;
-    //     }
-
-    // }
-
-    //game.board[1][3] = -1;
-
-    for(int i = 2; i<ROW-1; i++)
-    {
-        for(int j = 0; j<ROW; j++)
-        {
-            if(j == ROW-1)
-                game.board[i][j] = 1;
-            else
-                game.board[i][j] = -1;
-        }
-
-    }
-
-    game.start();
-
-    //game.printBoard();
-    //cout << game.didWin() << " " <<  game.isTie() << endl;
-
-    return 0;
 }
