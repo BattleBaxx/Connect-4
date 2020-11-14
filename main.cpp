@@ -12,21 +12,18 @@ using namespace std;
 
 int main()
 {
-    char player;
-    cout << "Choose your character PLAYER: ";
-    cin >> player;
-
-    Game game(player);
     
-
+    Game game;
+    
+    game.initialize();
     game.printBoard();
-    //int compMove = game.getCompMove();
+    // int compMove = game.getCompMove();
     game.start();
 
     // cout << "Did Win value: " << game.didWin() << endl;
 
-    //game.printBoard();
-    //cout << game.didWin() << " " <<  game.isTie() << endl;
+    // game.printBoard();
+    // cout << game.didWin() << " " <<  game.isTie() << endl;
 
     return 0;
 }

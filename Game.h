@@ -13,8 +13,10 @@ public:
     int board[ROW][ROW];
     char player;
     char cpu;
+    char playerColor;
 //public:
-    Game(char);
+    Game();
+    void initialize();
     void printBoard();
     string getColor(char);
     void makeMove(int, bool);

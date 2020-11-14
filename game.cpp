@@ -4,10 +4,33 @@
 using namespace std;
 
 // Contructor sets char of player
-Game :: Game(char player_1) :board({{0,0,0,0},{0,0,0,0},{0,0,0,0},{1,1,1,-1}})
+Game :: Game() 
 {
-    this->player = player_1;
+    for(auto &row : board)
+        for(auto &val : row)
+            val = 0;
     this->cpu = 'c';
+}
+
+void Game :: initialize()
+{
+    cout << "Choose your character HUMAN: ";
+    cin >> this->player;
+
+    char colors[6] = {'r', 'g', 'y', 'b', 'm', 'c'};
+    int color;
+
+    cout << "Available Colors are" << endl;
+    cout << getColor('r') << "1. Red" << endl;
+    cout << getColor('g') << "2. Green" << endl;
+    cout << getColor('y') << "3. Yellow" << endl;
+    cout << getColor('b') << "4. Blue" << endl;
+    cout << getColor('m') << "5. Megenta" << endl;
+    cout << getColor('c') << "6. Cyan" << getColor('n') << endl;
+     cout << "Choose your Color: ";
+    cin >> color;
+    this->playerColor = colors[color-1];
+
 }
 
 // Function for returns color
@@ -42,19 +65,20 @@ void Game :: printBoard()
         cout << " v  ";
     cout << endl;
 
+
     for(auto &rows : board)
     {
         cout << "| ";
         for(auto &val : rows)
         {
             if(val == 1)
-                cout << getColor('y') << player << getColor('n') << " | ";
+                cout << getColor(playerColor) << player << getColor('n') << " | ";
             else if(val == -1)
                 cout << getColor('g') << cpu << getColor('n') << " | ";
             else
                 cout << getColor('c') << "." << getColor('n') << " | ";
         }
-        cout << endl << "----------------" << endl;
+        cout << endl << "-----------------" << endl;
     }
 
 
