@@ -18,6 +18,19 @@ int main()
 
     Game game(player);
     
+
+    game.printBoard();
+    //int compMove = game.getCompMove();
+    game.start();
+
+    // cout << "Did Win value: " << game.didWin() << endl;
+
+    //game.printBoard();
+    //cout << game.didWin() << " " <<  game.isTie() << endl;
+
+    return 0;
+}
+
     // game.makeMove(5, true);
     // game.makeMove(4, false);
     // game.makeMove(4, true);
@@ -82,14 +95,3 @@ int main()
     // }
 
     //game.board[1][3] = -1;
-
-
-    game.printBoard();
-    //int compMove = game.getCompMove();
-    game.start();
-
-    //game.printBoard();
-    //cout << game.didWin() << " " <<  game.isTie() << endl;
-
-    return 0;
-}

@@ -27,11 +27,11 @@ public:
 };
 
 // Contructor sets char of player
-Game :: Game(char player_1) //: board({{0,0,0,1},{-1,1,-1,-1},{1,1,1,-1},{1,1,-1,-1}})
+Game :: Game(char player_1) :  board({{1,-1,0,1},{-1,-1,0,-1},{1,1,-1,-1},{1,1,1,-1}})
 {
-    for(auto &rows : board)
-        for(auto &val : rows)
-            val = 0;
+    // for(auto &rows : board)
+    //     for(auto &val : rows)
+    //         val = 0;
     this->player = player_1;
     this->cpu = 'c';
 }
@@ -399,6 +399,12 @@ int Game  :: minimax(int depth, bool player)
                 makeMove(i, true);
                 presentScore = minimax(depth+1, false);
                 removeMove(i);
+                if(presentScore == -1)
+                {
+                    bestScore = presentScore;
+                    bestMove = i;
+                    break;
+                }
                 if(presentScore < bestScore)
                 {
                     bestScore = presentScore;
@@ -422,6 +428,12 @@ int Game  :: minimax(int depth, bool player)
                 makeMove(i, false);
                 presentScore = minimax(depth+1, true);
                 removeMove(i);
+                if(presentScore == 1)
+                {
+                    bestScore = presentScore;
+                    bestMove = i;
+                    break;
+                }
                 if(presentScore > bestScore)
                 {
                     bestScore = presentScore;
@@ -516,17 +528,21 @@ int main()
     //game.start();
 
     int userMove;
+    //game.printBoard();
+    //cout << game.minimax(0,false) << endl;
     //cout << game.didWin() << " " <<  game.isTie() << endl;
-    while(true)
-    {
-        game.printBoard();
-        cout << "Enter your move: ";
-        cin >> userMove;
-        game.makeMove(userMove, true);
-        int res = game.minimax(0, false);
-        cout << "\n\nComputer's move: " <<  res << endl;
-        game.makeMove(res, false);
-    }
+    // while(true)
+    // {
+    //     game.printBoard();
+    //     cout << "Enter your move: ";
+    //     cin >> userMove;
+    //     game.makeMove(userMove, true);
+    //     int res = game.minimax(0, false);
+    //     cout << "\n\nComputer's move: " <<  res << endl;
+    //     game.makeMove(res, false);
+    // }
+
+    cout << game.didWin() << endl;
 
     return 0;
 }

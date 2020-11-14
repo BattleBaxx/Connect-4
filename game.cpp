@@ -4,7 +4,7 @@
 using namespace std;
 
 // Contructor sets char of player
-Game :: Game(char player_1) : board({{0,0,0,0},{0,0,0,0},{0,0,0,0},{0,0,0,0}})
+Game :: Game(char player_1) :board({{0,0,0,0},{0,0,0,0},{0,0,0,0},{1,1,1,-1}})
 {
     this->player = player_1;
     this->cpu = 'c';
@@ -134,32 +134,6 @@ int Game :: didWin()
                 
                 flag = true;
                 
-                // loop for 6:00
-                for (int k = 1; k < 4; k++)
-                {
-                    if(i + 3 <= ROW - 1 )
-                    {
-                        if(board[i+k][j] != val)
-                        {
-                            flag = false;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        flag = false;
-                    }
-                    
-                }
-
-                if(flag)
-                {
-                    won = board[i][j];
-                    break;
-                }
-
-                flag = true;    
-                
                 // loop for 3:00 
                 for (int k = 1; k < 4; k++)
                 {
@@ -178,32 +152,6 @@ int Game :: didWin()
                     
                 }
                 
-                if(flag)
-                {
-                    won = board[i][j];
-                    break;
-                }
-
-                flag = true;
-
-                // loop for 9:00
-                for (int k = 1; k < 4; k++)
-                {
-                    if(j - 3 >= 0)
-                    {
-                        if(board[i][j-k] != val)
-                        {
-                            flag = false;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        flag = false;
-                    }
-                    
-                }
-
                 if(flag)
                 {
                     won = board[i][j];
@@ -264,55 +212,7 @@ int Game :: didWin()
 
                 flag = true;
 
-                // loop for 7:30
-                for (int k = 1; k < 4; k++)
-                {
-                    if(j + 3 >= 0 && i + 3 <= ROW - 1 )
-                    {
-                        if(board[i+k][j-k] != val)
-                        {
-                            flag = false;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        flag = false;
-                    }
-                    
-                }
-
-                if(flag)
-                {
-                    won = board[i][j];
-                    break;
-                }
-
-                flag = true;
-
-                // loop for 10:30
-                for (int k = 1; k < 4; k++)
-                {
-                    if(j + 3 >= 0 && i + 3 >= 0)
-                    {
-                        if(board[i-k][j-k] != val)
-                        {
-                            flag = false;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        flag = false;
-                    }
-                    
-                }
-
-                if(flag)
-                {
-                    won = board[i][j];
-                    break;
-                }
+                
             }
 
             if(won != 0)
