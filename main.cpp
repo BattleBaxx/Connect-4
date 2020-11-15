@@ -1,7 +1,6 @@
 #include <iostream>
 #include <vector>
 #include <algorithm> 
-// #include "Game.h"
 #include "game.cpp"
 #define ROW 4
 
@@ -14,7 +13,6 @@ int main()
 {
     
     Game game;
-    
     game.initialize();
     game.printBoard();
     // int compMove = game.getCompMove();
