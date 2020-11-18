@@ -3,7 +3,7 @@
 
 using namespace std;
 
-// Contructor sets char of player
+// Contructor 
 Game :: Game() 
 {
     for(auto &row : board)
@@ -12,6 +12,7 @@ Game :: Game()
     this->cpu = 'c';
 }
 
+// Function for getting input
 void Game :: initialize()
 {
     cout << "Choose your character HUMAN: ";
@@ -269,10 +270,8 @@ int Game  :: minimax(int depth, bool player)
 {
     int won = didWin();
     
-    //cout << "Calling minimax at depth: " << depth << endl;
     if(isTie())
     {
-        // << "BASE CONDITION" << endl;
         return 0;
     }
     if(won != 0)
@@ -294,7 +293,6 @@ int Game  :: minimax(int depth, bool player)
             }
         }
 
-        //cout << "Returning bestscore: " << bestScore << endl;
         return bestScore;
     }
 
@@ -313,7 +311,6 @@ int Game  :: minimax(int depth, bool player)
                 bestScore = min(presentScore, bestScore);
             }
         }
-        //cout << "Returning bestscore: " << bestScore << endl;
         return bestScore;
     }
     
@@ -324,6 +321,7 @@ int Game :: getCompMove()
     int bestScore = 99999;
     int bestMove = 0;
     int presentScore;
+    cout << "The Computer is thinking...." << endl;
     for (int i = 0; i < ROW; i++)
     {
         // Checking if the position is free
@@ -331,23 +329,18 @@ int Game :: getCompMove()
         {
             makeMove(i, false);
             presentScore = minimax(0, true);
-            //cout << "RETURNED OUT OF MINIMAX" << endl;
             removeMove(i);
-            // if(presentScore == 1)
-            // {
-            //     cout << "PRESENT SCORE 1" << endl;
-            //     cout << "Best score: " << bestScore << endl;
-            // }
+
             if(presentScore <= bestScore)
             {
                 bestMove = i;
                 bestScore = presentScore;
             }
-            cout << "PresentScore for i: " << i << " is " << presentScore << endl;
+            //cout << "PresentScore for i: " << i << " is " << presentScore << endl;
         }
         
     }
-    //cout << "Returning bestMove value : " << bestMove << endl;
+    cout << "Thinking done. " << endl << "Best Move to be played now is: " << bestMove << endl;
     return bestMove;
 }
 
@@ -367,15 +360,14 @@ void Game :: start()
         compMove = getCompMove();
         makeMove(compMove,false);
         printBoard();
-        //system("clear");
         won = didWin();
     }
     
     if(won == 1)
-        cout << "The human won." << endl;
+        cout << "HUMAN won !!!!" << endl << "Congrats you won with a machine" << endl;
     else if (won == -1)
-        cout << "What did you think you would win with a computer.." << endl;
+        cout << "The COMPUTER won." << endl << "Better luck next time !!" << endl;
     else
-        cout << "Well the game is a tie." << endl;
+        cout << "The game is a tie." << endl;
 
 }

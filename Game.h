@@ -6,7 +6,7 @@
 
 using namespace std;
 
-
+// Class Game
 class Game
 {
 public:
@@ -14,7 +14,7 @@ public:
     char player;
     char cpu;
     char playerColor;
-//public:
+public:
     Game();
     void initialize();
     void printBoard();
